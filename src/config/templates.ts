@@ -1,4 +1,4 @@
 export const TEMPLATE = {
-	copyDialogTitle: (title: string, command: string | undefined, emptyMessage: string): string =>
-		`${title}\n${command ?? emptyMessage}`,
+	copied: (command: string): string => `\nCopied resume command to clipboard:\n${command}\n\n`,
+	copyFailed: (message: string): string => `\n${message}\n\n`,
 };
