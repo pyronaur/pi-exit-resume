@@ -1,11 +1,19 @@
 {
 	"name": "pi-exit-resume",
 	"version": "0.1.0",
-	"private": true,
 	"type": "module",
 	"description": "Pi extension that copies the resume command when Pi exits.",
-	"keywords": ["pi-package", "pi-extension"],
-	"files": ["src", "README.md"],
+	"keywords": ["pi-package", "pi-extension", "resume", "clipboard"],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/pyronaur/pi-exit-resume.git"
+	},
+	"homepage": "https://github.com/pyronaur/pi-exit-resume#readme",
+	"bugs": {
+		"url": "https://github.com/pyronaur/pi-exit-resume/issues"
+	},
+	"files": ["src", "README.md", "LICENSE"],
 	"pi": {
 		"extensions": ["./src/index.ts"]
 	},
