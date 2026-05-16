@@ -1,6 +1,6 @@
 # pi-exit-resume
 
-`pi-exit-resume` copies the current Pi resume command to your clipboard when Pi exits.
+`pi-exit-resume` copies a Pi resume command to your clipboard when the current Pi session shuts down with `reason: "quit"`.
 
 ## Install
 
@@ -18,20 +18,13 @@ Or add it directly to Pi settings:
 
 ## What it does
 
-When the current session quits, `pi-exit-resume` copies:
+On `session_shutdown` with `reason: "quit"`, it copies:
 
 ```bash
 pi --session <session-id>
 ```
 
-It also prints the copied command before Pi exits.
-
-## Behavior
-
-- Runs only on normal Pi quit shutdowns.
-- Does not intercept `Ctrl+C`.
-- Does not show a prompt.
-- Does not copy anything for `/new`, `/resume`, `/fork`, `/clone`, or extension reload.
+The session id comes from Pi's current `ctx.sessionManager`. If no resume command can be built, nothing is copied.
 
 ## Disable
 
