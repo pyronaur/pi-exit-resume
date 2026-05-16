@@ -1,0 +1,37 @@
+{
+	$use: './node_modules/.bin',
+
+	$hooks: {
+		after: '@commit',
+	},
+
+	format: {
+		name: 'Check TypeScript formatting',
+		match: ['src/**/*.ts', 'dprint.json'],
+		run: 'dprint check .',
+	},
+
+	lint: {
+		name: 'Lint TypeScript source',
+		match: ['src/**/*.ts', '.oxlintrc.json', 'tsconfig.json'],
+		run: 'oxlint --type-aware --tsconfig tsconfig.json .',
+	},
+
+	typecheck: {
+		name: 'Typecheck TypeScript source',
+		match: ['src/**/*.ts', 'tsconfig.json'],
+		run: 'tsc --noEmit',
+	},
+
+	dupes: {
+		name: 'Detect TypeScript duplication',
+		match: ['src/**/*.ts', '.jscpd.json'],
+		run: 'jscpd --config .jscpd.json .',
+	},
+
+	unused: {
+		name: 'Check unused TypeScript code and package usage',
+		match: ['src/**/*.ts', 'knip.json', 'tsconfig.json', 'package.json'],
+		run: 'knip',
+	},
+}
