@@ -11,8 +11,10 @@ import {
 	COPY_DIALOG_OPTIONS,
 	COPY_DIALOG_TITLE,
 	COPY_FAILED_MESSAGE,
+	NO_RESUME_COMMAND_MESSAGE,
 	RESUME_COMMAND_PREFIX,
 } from "./config/constants.ts";
+import { TEMPLATE } from "./config/templates.ts";
 
 type ExitContext = Pick<
 	ExtensionContext,
@@ -29,8 +31,7 @@ function getResumeCommand(ctx: ExitContext): string | undefined {
 	return `${RESUME_COMMAND_PREFIX}${sessionId}`;
 }
 
-async function exit(ctx: ExitContext, copy: boolean): Promise<void> {
-	const command = getResumeCommand(ctx);
+async function exit(ctx: ExitContext, command: string | undefined, copy: boolean): Promise<void> {
 	if (copy && command) {
 		try {
 			await copyToClipboard(command);
@@ -64,9 +65,13 @@ export default function piExitResume(pi: Pick<ExtensionAPI, "on">): void {
 
 			dialogOpen = true;
 			void (async () => {
-				const choice = await ctx.ui.select(COPY_DIALOG_TITLE, [...COPY_DIALOG_OPTIONS]);
+				const command = getResumeCommand(ctx);
+				const choice = await ctx.ui.select(
+					TEMPLATE.copyDialogTitle(COPY_DIALOG_TITLE, command, NO_RESUME_COMMAND_MESSAGE),
+					[...COPY_DIALOG_OPTIONS],
+				);
 				dialogOpen = false;
-				await exit(ctx, choice === COPY_DIALOG_OPTIONS[0]);
+				await exit(ctx, command, choice === COPY_DIALOG_OPTIONS[0]);
 			})();
 
 			return { consume: true };
